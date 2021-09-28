@@ -31,6 +31,13 @@ public class ConditionalOperators {
 			System.out.println("Statement 2 is true");
 		}
 		
+		if (num1 == num4 && num2 > num3 ) {
+			System.out.println("If Statement is true");
+		}
+		else {
+			System.out.println("If Statement is false");
+		}
+		
 		System.out.println("End of Program");
 	}
 
