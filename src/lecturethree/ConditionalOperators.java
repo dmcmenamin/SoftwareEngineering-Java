@@ -21,8 +21,14 @@ public class ConditionalOperators {
 		num3 = 100;
 		num4 = 10 ;
 		
-		if (num1 == num4) {
+		if ((num1 == num4) && (num2 > num3)) {
+			// Will print if both are true
 			System.out.println("Condition is true");
+		}
+		
+		if ((num1 == num4) || (num2 > num3)) {
+			// Will print if one of the things is true
+			System.out.println("Statement 2 is true");
 		}
 		
 		System.out.println("End of Program");
