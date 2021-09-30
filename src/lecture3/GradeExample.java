@@ -1,7 +1,7 @@
 /**
  * 
  */
-package lecturethree;
+package lecture3;
 
 /**
  * @author Darren McMenamin
