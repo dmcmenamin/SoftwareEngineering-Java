@@ -1,5 +1,6 @@
 package lecture7;
 
+import java.util.Calendar;
 import java.util.Random;
 import java.util.Scanner;
 
@@ -46,30 +47,119 @@ public class MethodsPracticalPart1 {
         }
     }
 
-    public static void promptedCountdown(){
-        System.out.println("Please enter a number in the range 1 - 50");
-        Scanner scan = new Scanner(System.in);
-        int countdownNumber = scan.nextInt();
-        if(countdownNumber < 1 || countdownNumber > 50) {
-            System.out.println("Sorry that number is not valid");
-            promptedCountdown();
-        }
+    public static void promptedCountdown(int countdownNumber){
+
         for(int i = countdownNumber; i > 0; i--){
             System.out.printf("%d %s %n", i, "*".repeat(i));
         }
 
-        scan.close();
+    }
+
+    /**
+     * A Void Method that takes in an Integar and prints it out as a numerical
+     * @param numberToBeConverted String which be converted to an integer
+     */
+    public static void printNumberInWord(String numberToBeConverted) {
+
+        int convertedNumber;
+
+        switch (numberToBeConverted) {
+            case "one":
+                convertedNumber = 1;
+                break;
+            case "two":
+                convertedNumber = 2;
+                break;
+            case "three":
+                convertedNumber = 3;
+                break;
+            case "four":
+                convertedNumber = 4;
+                break;
+            case "five":
+                convertedNumber = 5;
+                break;
+            case "six":
+                convertedNumber = 6;
+                break;
+            case "seven":
+                convertedNumber = 7;
+                break;
+            case "eight":
+                convertedNumber = 8;
+                break;
+            case "nine":
+                convertedNumber = 9;
+                break;
+            default:
+                convertedNumber = 0;
+        }
+        System.out.printf("%s has been converted to %d %n", numberToBeConverted, convertedNumber);
+
 
     }
 
+    /**
+     * A Void Method that generates a random number in the range 1 - 50
+     * It then calculates the and returns sum and average of those numbers
+     */
+
+    public static void sumAndAverage(){
+
+        Random random = new Random();
+        int maximumBoundary = random.nextInt(100) + 1;
+        int loopCounter = 0;
+        int loopSum = 0;
+
+        for (loopCounter = 0; loopCounter <= maximumBoundary; loopCounter++) {
+            loopSum += loopCounter;
+        }
+
+        float loopAverage = loopSum / loopCounter;
+
+        System.out.println("The maximum bound is " + maximumBoundary);
+        System.out.println("The sum of numbers is " + loopSum);
+        System.out.println("The average of numbers is " + loopAverage);
+
+    }
+
+    /**
+     * A Void Method that identifies if it is AM or PM
+     * And prints out an appropriate message
+     */
+    public static void amOrPM(){
+        int morningOrEvening = Calendar.getInstance().get(Calendar.AM_PM);
+        if (morningOrEvening == 0) {
+            System.out.println("Good Morning");
+        }
+        else {
+            System.out.println("Good Evening");
+        }
+    }
+
+
     public static void main(String[] args) {
 
+        Scanner scan = new Scanner(System.in);
 //        oddOrEven();
 
         convertFromUpperToLower('a');
         isMultiple(3,2);
         tenRandomNumbersBetweenOneAndOneHundred();
-        promptedCountdown();
+
+        System.out.println("Please enter a number in the range 1 - 50");
+        int inputtedNumber = scan.nextInt();
+        promptedCountdown(inputtedNumber);
+        scan.nextLine();
+
+        System.out.println("Please enter a textual representation in the range One to Nine");
+        String inputtedStringNumber = scan.nextLine().toLowerCase();
+        printNumberInWord(inputtedStringNumber);
+
+        sumAndAverage();
+        amOrPM();
+
+        scan.close();
     }
 
 }
