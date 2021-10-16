@@ -47,9 +47,24 @@ public class MethodsPracticalPart1 {
         }
     }
 
-    public static void promptedCountdown(int countdownNumber){
+    public static void promptedCountdown(Scanner scanner){
 
-        for(int i = countdownNumber; i > 0; i--){
+        int inputtedNumber = 0;
+        boolean continueLoop = true;
+        do {
+            System.out.println("Please enter a number in the range 5 - 50");
+            inputtedNumber = scanner.nextInt();
+            if(inputtedNumber < 5 || inputtedNumber > 50){
+                System.out.println("Please enter a valid amount");
+            }
+            else {
+                continueLoop = false;
+            }
+        }
+        while (continueLoop);
+
+
+        for(int i = inputtedNumber; i > 0; i--){
             System.out.printf("%d %s %n", i, "*".repeat(i));
         }
 
@@ -103,7 +118,6 @@ public class MethodsPracticalPart1 {
      * A Void Method that generates a random number in the range 1 - 50
      * It then calculates the and returns sum and average of those numbers
      */
-
     public static void sumAndAverage(){
 
         Random random = new Random();
@@ -148,9 +162,7 @@ public class MethodsPracticalPart1 {
         tenRandomNumbersBetweenOneAndOneHundred();
 
 
-        System.out.println("Please enter a number in the range 1 - 50");
-        int inputtedNumber = scan.nextInt();
-        promptedCountdown(inputtedNumber);
+        promptedCountdown(scan);
         scan.nextLine();
 
 
