@@ -56,7 +56,7 @@ public class MethodsPracticalPart1 {
     }
 
     /**
-     * A Void Method that takes in an Integar and prints it out as a numerical
+     * A Void Method that takes in an Integer and prints it out as a numerical
      * @param numberToBeConverted String which be converted to an integer
      */
     public static void printNumberInWord(String numberToBeConverted) {
@@ -147,10 +147,12 @@ public class MethodsPracticalPart1 {
         isMultiple(3,2);
         tenRandomNumbersBetweenOneAndOneHundred();
 
+
         System.out.println("Please enter a number in the range 1 - 50");
         int inputtedNumber = scan.nextInt();
         promptedCountdown(inputtedNumber);
         scan.nextLine();
+
 
         System.out.println("Please enter a textual representation in the range One to Nine");
         String inputtedStringNumber = scan.nextLine().toLowerCase();
