@@ -47,9 +47,6 @@ public class Day1ReverseString {
         userString = scanner.nextLine();
         scanner.close();
         System.out.printf("The reverse of %s is %s %n", userString, reverseString(userString));
-
-
-
     }
 
 
