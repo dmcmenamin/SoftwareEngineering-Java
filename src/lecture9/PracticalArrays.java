@@ -54,15 +54,16 @@ public class PracticalArrays {
     public static double[] heights() {
         double [] studentHeights = {1.4, 1.9, 1.31, 1.2};
         double [] returnHeights = new double[3];
-        double currentMaximum = 0;
-        double currentMinimum = studentHeights[0];
-        double currentCount = 0;
-        int numberOfElements = studentHeights.length;
+
 
         returnHeights[0] = Arrays.stream(studentHeights).average().getAsDouble();
         returnHeights[1] = Arrays.stream(studentHeights).max().getAsDouble();
         returnHeights[2] = Arrays.stream(studentHeights).min().getAsDouble();
 
+//        double currentMaximum = 0;
+//        double currentMinimum = studentHeights[0];
+//        double currentCount = 0;
+//        int numberOfElements = studentHeights.length;
 //        for (int i = 0; i < studentHeights.length; i++) {
 //            if(studentHeights[i] >= currentMaximum) {
 //                currentMaximum = studentHeights[i];
