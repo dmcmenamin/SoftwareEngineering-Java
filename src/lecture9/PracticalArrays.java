@@ -2,6 +2,7 @@ package lecture9;
 
 import java.time.DayOfWeek;
 import java.util.Arrays;
+import java.util.Scanner;
 
 /**
  * @author: Darren McMenamin
@@ -60,23 +61,25 @@ public class PracticalArrays {
         returnHeights[1] = Arrays.stream(studentHeights).max().getAsDouble();
         returnHeights[2] = Arrays.stream(studentHeights).min().getAsDouble();
 
-//        double currentMaximum = 0;
-//        double currentMinimum = studentHeights[0];
-//        double currentCount = 0;
-//        int numberOfElements = studentHeights.length;
-//        for (int i = 0; i < studentHeights.length; i++) {
-//            if(studentHeights[i] >= currentMaximum) {
-//                currentMaximum = studentHeights[i];
-//            }
-//            if(studentHeights[i] <= currentMinimum) {
-//                currentMinimum = studentHeights[i];
-//            }
-//            currentCount += studentHeights[i];
-//        } // end for
-//
-//        returnHeights[0] = (currentCount / numberOfElements);
-//        returnHeights[1] = currentMaximum;
-//        returnHeights[2] = currentMinimum;
+/*
+        double currentMaximum = 0;
+        double currentMinimum = studentHeights[0];
+        double currentCount = 0;
+        int numberOfElements = studentHeights.length;
+        for (int i = 0; i < studentHeights.length; i++) {
+            if(studentHeights[i] >= currentMaximum) {
+                currentMaximum = studentHeights[i];
+            }
+            if(studentHeights[i] <= currentMinimum) {
+                currentMinimum = studentHeights[i];
+            }
+            currentCount += studentHeights[i];
+        } // end for
+
+        returnHeights[0] = (currentCount / numberOfElements);
+        returnHeights[1] = currentMaximum;
+        returnHeights[2] = currentMinimum;
+*/
 
         return returnHeights;
     }
@@ -98,6 +101,69 @@ public class PracticalArrays {
         System.out.printf("The tallest students height is %2.2f %n", heightOfStudents[1]);
         System.out.printf("The smallest students height is %2.2f %n", heightOfStudents[2]);
 
+        System.out.printf("Please enter your first name: ");
+        Scanner scanner = new Scanner(System.in);
+        String userFirstName = scanner.nextLine();
+
+        char [] charArray = assignFirstNameToCharArray(userFirstName);
+        System.out.printf("The number of vowels in %s is %d %n", userFirstName, numberOfVowelsInName(charArray));
+
+        evenNumbersFrom1To100();
+
+
     }//end Main
+
+    /**
+     * Takes in an array and returns the number of vowels in that name
+     * @param charArray - Array of characters
+     * @return int
+     */
+    private static int numberOfVowelsInName(char[] charArray) {
+        int numberOfVowels = 0;
+        for (int i = 0; i < charArray.length; i++) {
+            if (charArray[i] == 'a' || charArray[i] == 'e' || charArray[i] == 'i' ||
+            charArray[i] == 'o' || charArray[i] == 'u'){
+                numberOfVowels += 1;
+            }// end if
+        }// end for
+        return numberOfVowels;
+    }// end numberOfVowelsInName
+
+    /**
+     * Takes in a user's name and iterates through it into a Char Array
+     * @param passedFirstName String
+     * @return Char Array
+     */
+    private static char[] assignFirstNameToCharArray(String passedFirstName) {
+        char[] returnedCharArray = new char[passedFirstName.length()];
+
+        for (int i = 0; i < passedFirstName.length(); i++) {
+            returnedCharArray[i] = passedFirstName.charAt(i);
+        }//end for
+        return returnedCharArray;
+    }// end assignFirstNameToCharArray
+
+    public static void evenNumbersFrom1To100(){
+      int [] numbersFrom1To100 = new int[49];
+      int arrayPosition = 0;
+        for (int i = 1; i < 100; i++) {
+            if(i % 2 == 0){
+                numbersFrom1To100[arrayPosition] = i;
+                arrayPosition += 1;
+            }// end if
+        }//end for
+
+        for (int i = 0; i < numbersFrom1To100.length; i++) {
+            System.out.println(numbersFrom1To100[i]);
+        }// for
+
+        System.out.println("The total is " + Arrays.stream(numbersFrom1To100).sum());
+    }
+
+    public static void printArrayToScreen (int [] inputArray) {
+        for (int i = 0; i < inputArray.length; i++) {
+            System.out.println(inputArray[i]);
+        }// end for
+    }// endPrintArrayToScreen
 
 }//end Class PracticalArrays
