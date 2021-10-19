@@ -258,10 +258,7 @@ public class PracticalArrays {
      * @return the highest of the two inputs
      */
     public static double highestOfTwoNumbers (double num1, double num2) {
-        if (num1 > num2){
-            return num1;
-        }
-        else return num2;
+        return Math.max(num1, num2);
     }//end highestOfTwoNumbers
 
     /**
