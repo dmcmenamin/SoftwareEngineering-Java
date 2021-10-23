@@ -11,7 +11,7 @@ public class Day1ReverseString {
 
     /**
      * A Method that takes in a String and returns back it's reverse
-     * @param inputString
+     * @param inputString - String
      * @return reversed String
      */
     public static String reverseString(String inputString){
@@ -26,8 +26,8 @@ public class Day1ReverseString {
     }
 
     /**
-     *
-     * @param args
+     * Main Method
+     * @param args -
      */
     public static void main(String[] args) throws FileNotFoundException {
 
@@ -37,7 +37,11 @@ public class Day1ReverseString {
         sc.close();
         System.out.printf("The reverse of %s is %s %n", userString, reverseString(userString));
 
-        // Print Current File Location
+        /*
+            Trying to find out where my current file location is
+            Print all files in 'current' location
+            Uncomment to use
+         */
 //        File file = new File(".");
 //        for(String fileNames : file.list()) System.out.println(fileNames);
 
