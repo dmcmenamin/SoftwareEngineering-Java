@@ -17,6 +17,7 @@ public class FactorialExample {
         }
         System.out.printf("The factorial number of %d is %d", factorialNumber, outputNumber);
 
+        sc.close();
 
     }
 }
