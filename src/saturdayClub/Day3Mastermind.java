@@ -8,6 +8,18 @@ import java.util.regex.Pattern;
 
 public class Day3Mastermind {
 
+    final static int EASY_ARRAY_SIZE = 3;
+    final static int EASY_NO_OF_ATTEMPTS = 18;
+    final static int EASY_MAXIMUM_DIGIT = 5;
+
+    final static int NORMAL_ARRAY_SIZE = 4;
+    final static int NORMAL_NO_OF_ATTEMPTS = 10;
+    final static int NORMAL_MAXIMUM_DIGIT = 6;
+
+    final static int HARD_ARRAY_SIZE = 5;
+    final static int HARD_NO_OF_ATTEMPTS = 10;
+    final static int HARD_MAXIMUM_DIGIT = 8;
+
     /**
      * Asks yser to select value 1 - 3 to identify the challenge level
      * Validates, such that user can only select values 1 - 3
@@ -19,7 +31,7 @@ public class Day3Mastermind {
      * @return - String for difficulty level selected
      */
     public static String getChallengeLevel(Scanner sc) {
-        int userInput = 0;
+        int userInput;
         String returnChallengeLevel = "";
         boolean validEntry = false;
 
@@ -41,15 +53,9 @@ public class Day3Mastermind {
         while (! validEntry);
 
         switch (userInput) {
-            case 1:
-                returnChallengeLevel = "Easy";
-                break;
-            case 2:
-                returnChallengeLevel = "Normal";
-                break;
-            case 3:
-                returnChallengeLevel = "Hard";
-                break;
+            case 1 -> returnChallengeLevel = "Easy";
+            case 2 -> returnChallengeLevel = "Normal";
+            case 3 -> returnChallengeLevel = "Hard";
         } //end Switch
 
         sc.nextLine();
@@ -68,14 +74,14 @@ public class Day3Mastermind {
 
         int [] returnArray;
         if (difficulty.equals("Easy")){
-            returnArray = codeGenerator(3, 5);
+            returnArray = codeGenerator(EASY_ARRAY_SIZE, EASY_MAXIMUM_DIGIT);
         } // end if
         else {
             if (difficulty.equals("Normal")) {
-                returnArray = codeGenerator(4, 6);
+                returnArray = codeGenerator(NORMAL_ARRAY_SIZE, NORMAL_MAXIMUM_DIGIT);
             } // end if
             else {
-                returnArray = codeGenerator(5, 8 );
+                returnArray = codeGenerator(HARD_ARRAY_SIZE, HARD_MAXIMUM_DIGIT );
             } // end else
         } // end else
 
@@ -109,16 +115,16 @@ public class Day3Mastermind {
      * @return - Integer - returns the maximum number expected
      */
     public static int setMaximumDigit(String difficulty) {
-        int range = 0;
+        int range;
         if (difficulty.equals("Easy")){
-            range = 5;
+            range = EASY_MAXIMUM_DIGIT;
         }
         else {
             if (difficulty.equals("Normal")) {
-                range = 6;
+                range = NORMAL_MAXIMUM_DIGIT;
             }
             else
-                range = 8;
+                range = HARD_MAXIMUM_DIGIT;
         }
         return range;
     }
@@ -128,20 +134,24 @@ public class Day3Mastermind {
      * Easy - 15 Attempts
      * Normal - 10 Attempts
      * Hard - 10 Guesses
-     * @param difficulty
-     * @return
+     * @param difficulty - string
+     * @return - returns the number of attempts
      */
     public static int setNumberOfAttempts(String difficulty) {
 
-        int numberOfAttempts = 0;
+        int numberOfAttempts;
 
         if(difficulty.equals("Easy")) {
-            numberOfAttempts = 15;
+            numberOfAttempts = EASY_NO_OF_ATTEMPTS;
 
         }//end if
         else {
-            numberOfAttempts = 10;
-
+            if (difficulty.equals("Normal")){
+                numberOfAttempts = NORMAL_NO_OF_ATTEMPTS;
+            }
+            else {
+                numberOfAttempts = HARD_NO_OF_ATTEMPTS;
+            }
         }// end else
         return numberOfAttempts;
 
@@ -160,7 +170,7 @@ public class Day3Mastermind {
 
         String userNumber = sc.nextLine();
         int [] returnUserArray = new int[numberOfDigits];
-        String regexAlphabetic = "[a-zA-Z]+";
+        String regexAlphabetic = "[^0-9]+";
 
         Pattern alphaPattern = Pattern.compile(regexAlphabetic);
 
@@ -216,19 +226,70 @@ public class Day3Mastermind {
     }
 
     /**
+     * Performs a check for matches, first checking if digit for exact position
+     * Then checking if digit occurs, but not in current position
+     * @param codedValue - System generated value
+     * @param userGuess - user's current guess
+     * @return - an Array that consists of 4 values
+     *          Value 1 - Users Current Guess
+     *          Value 2 - Exact Matches
+     *          Value 3 - Partial Matches
+     *          Value 4 - No Matches
+     */
+    public static int[] checkForMatches(int[] codedValue, int[] userGuess) {
+        int [] returnArray = new int[4];
+        int exactPositionalMatch = 0;
+        int containsMatch = 0;
+        int noMatch = userGuess.length;
+
+        int multiplier = 1;
+
+        for (int i = 0; i < userGuess.length; i++) {
+            if(userGuess[i] == codedValue[i]) {
+                exactPositionalMatch += 1;
+                noMatch --;
+            }
+            else {
+                for (int j: codedValue) {
+                    if (userGuess[i] == j) {
+                        containsMatch++;
+                        noMatch --;
+                    }// end id
+                }// end for
+            }// end else
+        }// end for
+
+        /*
+        converts an array into an int
+        by starting at the end of the string and then looping through each value
+        multiplying it by (10 to the power of index) e.g.
+        10**1, = 10
+        10**2 = 100
+        and adding that to the existing value
+         */
+        for (int i = userGuess.length-1; i >= 0 ; i--) {
+            returnArray[0] += userGuess[i] * multiplier;
+            multiplier = (int) Math.pow(10, String.valueOf((returnArray[0])).length());
+        } //end for
+
+        returnArray[1] = exactPositionalMatch;
+        returnArray[2] = containsMatch;
+        returnArray[3] = noMatch;
+
+        return returnArray;
+    }// end checkForMatches
+
+    /**
      * Add an integer array to a 2d Array
      * @param currentPosition - current position in 2D array
      * @param table - Result table that we are adding a row to
      * @param currentRow - Row to be added
-     * @return - updated table
      */
-    public static int[][] addToCurrentTable(int currentPosition, int[][] table, int[] currentRow) {
+    public static void addToCurrentTable(int currentPosition, int[][] table, int[] currentRow) {
 
-        for (int i = 0; i < table[currentPosition].length; i++) {
-            table[currentPosition][i] = currentRow[i];
-        } //end for
+        //end for
+        System.arraycopy(currentRow, 0, table[currentPosition], 0, table[currentPosition].length);
 
-        return table;
     }// end addToCurrentTable
 
     /**
@@ -282,51 +343,8 @@ public class Day3Mastermind {
             displayTable(resultTable, i);
         } // end for
 
+        System.out.println("The correct code was: " + Arrays.toString(codedValue));
+        scanner.close();
     }// end main
 
-    /**
-     * Performs a check for matches, first checking if digit for exact position
-     * Then checking if digit occurs, but not in current position
-     * @param codedValue - System generated value
-     * @param userGuess - user's current guess
-     * @return - an Array that consists of 4 values
-     *          Value 1 - Users Current Guess
-     *          Value 2 - Exact Matches
-     *          Value 3 - Partial Matches
-     *          Value 4 - No Matches
-     */
-    public static int[] checkForMatches(int[] codedValue, int[] userGuess) {
-        int [] returnArray = new int[4];
-        int exactPositionalMatch = 0;
-        int containsMatch = 0;
-        int noMatch = userGuess.length;
-
-        int multiplier = 1;
-
-        for (int i = 0; i < userGuess.length; i++) {
-            if(userGuess[i] == codedValue[i]) {
-                exactPositionalMatch += 1;
-                noMatch --;
-                }
-            else {
-                for (int j: codedValue) {
-                    if (userGuess[i] == j) {
-                        containsMatch++;
-                        noMatch --;
-                        }// end id
-                    }// end for
-                }// end else
-            }// end for
-
-        for (int i = userGuess.length-1; i >= 0 ; i--) {
-            returnArray[0] += userGuess[i] * multiplier;
-            multiplier = (int) Math.pow(10, String.valueOf((returnArray[0])).length());
-        }
-
-        returnArray[1] = exactPositionalMatch;
-        returnArray[2] = containsMatch;
-        returnArray[3] = noMatch;
-
-        return returnArray;
-    }
-}
+} // end Class Day3MasterMind
