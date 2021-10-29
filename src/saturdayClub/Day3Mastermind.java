@@ -254,6 +254,7 @@ public class Day3Mastermind {
                     if (userGuess[i] == j) {
                         containsMatch++;
                         noMatch --;
+                        break;
                     }// end id
                 }// end for
             }// end else
