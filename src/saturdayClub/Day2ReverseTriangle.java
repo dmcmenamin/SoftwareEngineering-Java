@@ -21,7 +21,6 @@ public class Day2ReverseTriangle {
     public static void main(String[] args) {
         
         int triangleSize = getSize();
-        int middleNumber = (triangleSize/2) + 1;
 
         String[] displayableArray = populateArray(triangleSize);
 
@@ -54,12 +53,17 @@ public class Day2ReverseTriangle {
         return userInput;
     } // end getSize
 
-    /**
-     * 
-     * @param arrayLength
-     * @return
-     */
 
+    /**
+     * Populates an array based on a required Triangle Size -
+     * Creates a line which is twice the triangle size + 1, to allow for spacing
+     * Initially set to blanks, it then loops through the array starting on the 2nd line - index 1
+     * It uses this index to populate a '*' on the +/- index side of the middle.
+     * Such that if the triangle side is 5 - the middle will be 3.
+     * So index 1 will populate a star at position 2 & 4 (middle +/- (index value:1))
+     * @param arrayLength - the required size od the triangle
+     * @return - a String Array with the values populated
+     */
     public static String[] populateArray (int arrayLength) {
 
        String [] triangleArray = new String[arrayLength];
@@ -69,25 +73,35 @@ public class Day2ReverseTriangle {
        line = line.substring(0, arrayLength-1) + "* ";
        triangleArray[0] = line;
 
+       // start counter at 1 - as first line will only have 1 star in the middle
        for (int counterLoop = 1; counterLoop < arrayLength-1; counterLoop++) {
 
+           // first populate blank line of spaces
            line = " ".repeat(arrayLength*2);
+
+           // find where stars need to be printed based on offsets
            int sideOne = arrayLength - counterLoop;
            int sideTwo = arrayLength + counterLoop;
 
+           // populate line
            line = line.substring(0,sideOne-1) + "* "
                    + line.substring(sideOne + 1, sideTwo-1) + "* ";
 
+           // insert populated line into array
            triangleArray[counterLoop] = line;
 
        }// end counterLoop
-        // populate the last line with *'s
 
+        // populate the last line with *'s
        triangleArray[arrayLength-1] = "* ".repeat(arrayLength);
        return triangleArray;
 
     }// end populateArray
 
+    /**
+     * A Void Array that takes in an array and prints it forwards
+     * @param printArray - String Array to be printed
+     */
     public static void printArrayForwards(String [] printArray) {
         for (int i = 0; i < printArray.length; i++) {
             System.out.println(printArray[i]);
@@ -95,9 +109,13 @@ public class Day2ReverseTriangle {
         }// end for
     }// end printArrayForward
 
-    public static void printArrayBackwards(String[] printArrray) {
-        for (int i = printArrray.length-1; i >= 0 ; i--) {
-            System.out.println(printArrray[i]);
+    /**
+     * A Void Array that takes in an array and prints it backwards
+     * @param printArray - String to be printed backwards
+     */
+    public static void printArrayBackwards(String[] printArray) {
+        for (int i = printArray.length-1; i >= 0 ; i--) {
+            System.out.println(printArray[i]);
 
         }
     }
