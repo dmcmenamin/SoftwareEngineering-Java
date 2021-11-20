@@ -11,7 +11,7 @@ public class FileReadingDemo {
 
     public static void main(String[] args) {
 
-        File file = new File("Lecture10-Lines.txt");
+        File file = new File("./External Files/Lecture10-Lines.txt");
         try {
             //used for reading a file
             FileReader fileReader = new FileReader(file);

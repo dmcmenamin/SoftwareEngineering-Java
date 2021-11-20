@@ -16,7 +16,7 @@ public class FileWritingDemo {
 
 
         try {
-            File file = new File("Lecture10-Lines.txt");
+            File file = new File("./External Files/Lecture10-Lines.txt");
             FileWriter fileWriter = new FileWriter(file, true); //append to existing file
             BufferedWriter bufferedWriter = new BufferedWriter(fileWriter);
 
