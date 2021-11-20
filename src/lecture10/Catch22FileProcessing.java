@@ -13,18 +13,55 @@ public class Catch22FileProcessing {
 
         try {
             File file = new File("./External Files/Catch 22.txt");
+            File redactedFile = new File("./External Files/Catch 22 Redacted.txt");
 
             FileReader fileReader = new FileReader(file);
-            FileWriter fileWriter = new FileWriter(file, true);
+            FileWriter fileWriter = new FileWriter(redactedFile);
 
             BufferedReader bufferedReader = new BufferedReader(fileReader);
             BufferedWriter bufferedWriter = new BufferedWriter(fileWriter);
 
+            String outputLine = bufferedReader.readLine();
+            int numberOfLines = 0;
+            int numberOfWords = 0;
+            int numberOfChars = 0;
+            int timesYossarianOccurs = 0;
+            int checkIfLetterOccurs = 0;
 
-            readFile(bufferedReader);
-            int numberOfLines = getNumberOfLines(bufferedReader);
-            System.out.println("The number of lines are: " + numberOfLines);
+            while (outputLine != null) {
 
+                String [] wordsPerLine = outputLine.split(" ");
+                numberOfWords += wordsPerLine.length;
+                StringBuilder lineToBeWrittenInRedactedFile = new StringBuilder();
+
+                System.out.println(outputLine);
+                numberOfLines++;
+
+                for (String word: wordsPerLine) {
+                    numberOfChars += word.length();
+
+                    String newWord = word;
+                    if (word.equals("Yossarian")) {
+                        timesYossarianOccurs++;
+                        newWord = "-".repeat("Yossarian".length());
+                    }
+
+                    lineToBeWrittenInRedactedFile.append(newWord).append(" ");
+                    checkIfLetterOccurs += timesLetterOccurs('a', word);
+                    checkIfLetterOccurs += timesLetterOccurs('A', word);
+                }
+
+                bufferedWriter.newLine();
+                bufferedWriter.write(lineToBeWrittenInRedactedFile.toString());
+
+                outputLine = bufferedReader.readLine();
+            }
+
+            System.out.printf("The Number Of Lines is %d%n", numberOfLines);
+            System.out.printf("The Number Of Words is %d%n", numberOfWords);
+            System.out.printf("The Number of Chars is %d%n", numberOfChars);
+            System.out.printf("The Number of times Yossarian appears %d%n", timesYossarianOccurs);
+            System.out.printf("The Number of times the letter %s occurs is %d%n", 'a', checkIfLetterOccurs);
 
             bufferedWriter.close();
             bufferedReader.close();
@@ -43,36 +80,12 @@ public class Catch22FileProcessing {
         }
     }
 
-    /**
-     *
-     * @param bufferedRead
-     */
-    public static void readFile(BufferedReader bufferedRead) {
+    public static long timesLetterOccurs(char letter, String inputWord) {
+        long numberOfOccurrences;
 
-        try {
-            String outputLine = bufferedRead.readLine();
+        numberOfOccurrences = inputWord.chars().filter(ch -> ch == letter).count();
 
-            while (outputLine != null){
-
-                System.out.println(outputLine);
-                outputLine = bufferedRead.readLine();
-            }
-
-        } catch (IOException e) {
-            System.out.println("Error in readFile with Reading File");
-            e.printStackTrace();
-        }
-    }
-
-    /**
-     * A Method which will get the number of lines in the file
-     * @param bufferedReader - Buffered Reader
-     * @return - number of lines as an Integer
-     */
-    public static int getNumberOfLines(BufferedReader bufferedReader) {
-
-
-
+        return numberOfOccurrences;
     }
 
 }
